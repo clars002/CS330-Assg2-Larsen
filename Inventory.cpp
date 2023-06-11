@@ -23,7 +23,12 @@ Inventory::Inventory(int n)
 
 //------------------------------------------------------------------------------
 Inventory::Inventory(const Inventory& src)
+    :Inventory(src.slots)
 {
+    for (const ItemStack& i : src)
+    {
+        addItemStackNoCheck(i);
+    }
     // @todo - implement this function
 }
 
@@ -105,6 +110,10 @@ Inventory::iterator Inventory::findMatchingItemStackIterator(const ItemStack& it
 //------------------------------------------------------------------------------
 void Inventory::addItemStackNoCheck(ItemStack itemStack)
 {
+    if ()
+    {
+
+    }
     // @todo - implement this function. This should be one push_back-y line...
 }
 
