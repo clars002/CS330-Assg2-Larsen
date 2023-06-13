@@ -29,7 +29,6 @@ Inventory::Inventory(const Inventory& src)
     {
         addItemStackNoCheck(i);
     }
-    // @todo - implement this function
 }
 
 //------------------------------------------------------------------------------
@@ -60,8 +59,7 @@ int Inventory::totalSlots() const
 //------------------------------------------------------------------------------
 bool Inventory::isFull() const
 {
-    // @todo - implement this function
-    return false; // replace this line
+    return (utilizedSlots() == totalSlots());
 }
 
 //------------------------------------------------------------------------------
@@ -92,29 +90,40 @@ Inventory::const_iterator Inventory::end() const
 void Inventory::display(std::ostream &outs) const
 {
     outs << " -Used " << utilizedSlots() << " of " << slots << " slots" << "\n";
+    for (ItemStack i : *this)
+    {
+        std::string count = std::to_string(i.size());
 
-    // @todo - implement the rest of function
-    //
-    // 2 spaces "  " before each ItemStack line
+        if (i.size() <= 9)
+            count = " " + count; // add leading space for single-digit numbers for formatting
+
+
+        outs << "  (" << count << ") " << i.getItem().getName() << "\n";
+    }
 }
 
 
 //------------------------------------------------------------------------------
 Inventory::iterator Inventory::findMatchingItemStackIterator(const ItemStack& itemStack)
 {
-    // @todo - implement this function
+    int otherID = itemStack.getItem().getID();
 
+    for (iterator i = begin(); i != end(); i++)
+    {
+        int currentID = (*i).getItem().getID();
+
+        if (currentID == otherID)
+        {
+            return i;
+        }
+    }
     return allItemStacks.end();
 }
 
 //------------------------------------------------------------------------------
 void Inventory::addItemStackNoCheck(ItemStack itemStack)
 {
-    if ()
-    {
-
-    }
-    // @todo - implement this function. This should be one push_back-y line...
+    allItemStacks.push_back(itemStack);
 }
 
 //------------------------------------------------------------------------------
@@ -169,6 +178,5 @@ bool operator==(const Inventory& lhs, const Inventory& rhs)
 //------------------------------------------------------------------------------
 void Inventory::mergeStacks(ItemStack& lhs, const ItemStack& rhs)
 {
-    // @todo - implement this function. There is no trick here (beyond
-    // reviewing Assignment 1).
+    lhs.addItemsFrom(rhs);
 }
